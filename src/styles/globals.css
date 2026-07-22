@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #492360;
+  --color-primary-hover: #3a1d4d;
+  --color-secondary: #fef0e7;
+  --color-secondary-hover: #fce8d8;
+  --color-tertiary: #f5bf3b;
+  --color-quaternary: #e3023a;
+  --color-error: #ef4444;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-info: #3b82f6;
+  --color-dark: #1e293b;
+  --color-light: #f8fafc;
+}
+
+@keyframes slide-in {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slide-in-left {
+  from { transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scale-in {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-slide-in { animation: slide-in 0.2s ease-out; }
+.animate-slide-in-left { animation: slide-in-left 0.3s ease-out; }
+.animate-fade-in { animation: fade-in 0.2s ease-out; }
+.animate-scale-in { animation: scale-in 0.2s ease-out; }
+.animate-slide-up { animation: slide-up 0.3s ease-out; }
+
+@media (max-width: 1023px) {
+  .touch-manipulation { touch-action: manipulation; }
+  .no-scroll-x { overflow-x: hidden; }
+  .safe-area-bottom { padding-bottom: env(safe-area-inset-bottom, 1rem); }
+  .safe-area-top { padding-top: env(safe-area-inset-top, 0); }
+}
