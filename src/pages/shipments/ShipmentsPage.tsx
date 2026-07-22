@@ -94,7 +94,7 @@ export const ShipmentsPage = () => {
                           <Icon icon="mdi:check-circle" className="w-4 h-4" />
                         </button>
                       )}
-                      {isAdmin && (
+                      {isAdmin && s.status !== 'cancelado' && (
                         <button onClick={() => cancelMutation.mutate(s.id)} className="p-1.5 hover:bg-slate-100 rounded-lg text-slate-500 hover:text-error" title="Eliminar">
                           <Icon icon="mdi:delete" className="w-4 h-4" />
                         </button>
