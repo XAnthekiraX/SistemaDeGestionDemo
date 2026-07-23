@@ -344,6 +344,20 @@ export async function mockValidateShipment(id: string, items: ValidatedItem[]): 
   shipment.updated_at = new Date().toISOString();
   save(LS_KEYS.shipments, shipments);
 
+  const movimientos = load<Movimiento[]>(LS_KEYS.movimientos, mockMovimientos);
+  movimientos.unshift({
+    id: uuid(),
+    type: 'shipment',
+    destination: shipment.destination,
+    status: 'confirmado',
+    created_at: new Date().toISOString(),
+    shipment_items: items.map(item => {
+      const product = products.find(p => p.id === item.product_id);
+      return { product_id: item.product_id, products: { name: product?.name || 'Desconocido' }, quantity: item.quantity };
+    }),
+  });
+  save(LS_KEYS.movimientos, movimientos);
+
   return { estado: 'exito', message: 'Pedido validado correctamente' };
 }
 
@@ -372,6 +386,21 @@ export async function mockCancelShipment(id: string): Promise<{ message: string;
     shipment.status = 'cancelado';
     shipment.updated_at = new Date().toISOString();
     save(LS_KEYS.shipments, shipments);
+
+    const movimientos = load<Movimiento[]>(LS_KEYS.movimientos, mockMovimientos);
+    movimientos.unshift({
+      id: uuid(),
+      type: 'shipment',
+      destination: shipment.destination,
+      status: 'cancelado',
+      created_at: new Date().toISOString(),
+      shipment_items: shipment.items.map(item => ({
+        product_id: item.product_id,
+        products: { name: item.name },
+        quantity: item.quantity,
+      })),
+    });
+    save(LS_KEYS.movimientos, movimientos);
   } else {
     save(LS_KEYS.shipments, shipments.filter(s => s.id !== id));
   }
